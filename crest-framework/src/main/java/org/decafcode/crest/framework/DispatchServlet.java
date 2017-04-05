@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.decafcode.crest.exception.MethodNotAllowedException;
 
 @Singleton
 public class DispatchServlet extends HttpServlet {
@@ -102,11 +103,11 @@ public class DispatchServlet extends HttpServlet {
             break;
         }
 
-        if (resp != null) {
-            writer.writeResponse(resp, httpResp);
-        } else {
-            httpResp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        if (resp == null) {
+            throw new MethodNotAllowedException();
         }
+
+        writer.writeResponse(resp, httpResp);
     }
 
     private OptionsResponse options(Class<? extends ResourcePath> pathClass) {

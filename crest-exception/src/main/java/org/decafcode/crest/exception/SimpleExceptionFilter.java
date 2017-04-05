@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 @Singleton
-public class ExceptionFilter implements Filter {
+public class SimpleExceptionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

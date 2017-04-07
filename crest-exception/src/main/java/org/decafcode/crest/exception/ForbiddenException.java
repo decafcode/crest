@@ -7,6 +7,10 @@ public class ForbiddenException extends HttpStatusException {
         super("Forbidden");
     }
 
+    public ForbiddenException(String message) {
+        super(message);
+    }
+
     @Override
     public final int statusCode() {
         return HttpServletResponse.SC_FORBIDDEN;

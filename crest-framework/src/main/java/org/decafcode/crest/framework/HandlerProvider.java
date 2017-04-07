@@ -5,6 +5,8 @@ public interface HandlerProvider {
 
     boolean hasPutHandler(Class<? extends ResourcePath> pathClass);
 
+    boolean hasPatchHandler(Class<? extends ResourcePath> pathClass);
+
     boolean hasPostHandler(Class<? extends ResourcePath> pathClass);
 
     boolean hasDeleteHandler(Class<? extends ResourcePath> pathClass);
@@ -13,6 +15,9 @@ public interface HandlerProvider {
             Class<T> pathClass);
 
     <T extends ResourcePath> PutHandler<T> getPutHandler(
+            Class<T> pathClass);
+
+    <T extends ResourcePath> PatchHandler<T> getPatchHandler(
             Class<T> pathClass);
 
     <T extends ResourcePath> PostHandler<T> getPostHandler(

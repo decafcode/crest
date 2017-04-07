@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.decafcode.crest.framework.DeleteHandler;
 import org.decafcode.crest.framework.GetHandler;
 import org.decafcode.crest.framework.HandlerProvider;
+import org.decafcode.crest.framework.PatchHandler;
 import org.decafcode.crest.framework.PostHandler;
 import org.decafcode.crest.framework.PutHandler;
 import org.decafcode.crest.framework.ResourcePath;
@@ -33,6 +34,12 @@ public final class GuiceHandlerProvider implements HandlerProvider {
                 pathClass));
     }
 
+    private static Key<?> keyPatch(Class<? extends ResourcePath> pathClass) {
+        return Key.get(Types.newParameterizedType(
+                PatchHandler.class,
+                pathClass));
+    }
+
     private static Key<?> keyPost(Class<? extends ResourcePath> pathClass) {
         return Key.get(Types.newParameterizedType(
                 PostHandler.class,
@@ -53,6 +60,11 @@ public final class GuiceHandlerProvider implements HandlerProvider {
     @Override
     public boolean hasPutHandler(Class<? extends ResourcePath> pathClass) {
         return g.getExistingBinding(keyPut(pathClass)) != null;
+    }
+
+    @Override
+    public boolean hasPatchHandler(Class<? extends ResourcePath> pathClass) {
+        return g.getExistingBinding(keyPatch(pathClass)) != null;
     }
 
     @Override
@@ -82,6 +94,17 @@ public final class GuiceHandlerProvider implements HandlerProvider {
             Class<T> pathClass) {
         try {
             return (PutHandler<T>) g.getInstance(keyPut(pathClass));
+        } catch (ConfigurationException e) {
+            return null;
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends ResourcePath> PatchHandler<T> getPatchHandler(
+            Class<T> pathClass) {
+        try {
+            return (PatchHandler<T>) g.getInstance(keyPatch(pathClass));
         } catch (ConfigurationException e) {
             return null;
         }

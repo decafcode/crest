@@ -84,6 +84,15 @@ public class DispatchServlet extends HttpServlet {
 
             break;
 
+        case "PATCH":
+            PatchHandler patchHandler = provider.getPatchHandler(pathClass);
+
+            if (patchHandler != null) {
+                resp = patchHandler.patch(path, req);
+            }
+
+            break;
+
         case "POST":
             PostHandler postHandler = provider.getPostHandler(pathClass);
 
@@ -121,6 +130,10 @@ public class DispatchServlet extends HttpServlet {
 
         if (provider.hasPutHandler(pathClass)) {
             methods.add("PUT");
+        }
+
+        if (provider.hasPatchHandler(pathClass)) {
+            methods.add("PATCH");
         }
 
         if (provider.hasPostHandler(pathClass)) {

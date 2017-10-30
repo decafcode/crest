@@ -2,8 +2,6 @@ package org.decafcode.crest.sitemap;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import org.decafcode.crest.framework.ResourcePath;
-import org.decafcode.crest.framework.Route;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
@@ -18,6 +16,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import org.decafcode.crest.framework.ResourcePath;
+import org.decafcode.crest.framework.Route;
 
 final class ForwardSiteMapBuilder {
     private final Map<Class<?>, Function<String, ?>> readers

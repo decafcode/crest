@@ -1,6 +1,9 @@
 package org.decafcode.crest.exception;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import javax.inject.Singleton;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -35,13 +38,27 @@ public class SimpleExceptionFilter implements Filter {
                     kvp.getValue()));
             resp.setStatus(e.statusCode());
             resp.setContentType("text/plain;charset=utf-8");
-            resp.getWriter().print(e.getMessage());
+            emit(resp, e.getMessage());
         } catch (Throwable t) {
             ctx.log("Uncaught exception", t);
 
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.setContentType("text/plain;charset=utf-8");
-            resp.getWriter().print("Internal Server Error");
+            emit(resp, "Internal Server Error");
+        }
+    }
+
+    void emit(HttpServletResponse resp, String message) {
+        try {
+            ByteBuffer byteBuf = StandardCharsets.US_ASCII.encode(message);
+            byte[] bytes = Arrays.copyOf(byteBuf.array(), byteBuf.limit());
+
+            resp.setContentType("text/plain;charset=utf-8");
+            resp.setContentLength(bytes.length);
+
+            resp.getOutputStream().write(bytes);
+        } catch (IOException e) {
+            ctx.log("Failed to send error message", e);
         }
     }
 

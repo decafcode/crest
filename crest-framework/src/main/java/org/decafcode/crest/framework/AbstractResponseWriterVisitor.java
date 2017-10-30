@@ -16,6 +16,7 @@ public abstract class AbstractResponseWriterVisitor
     public void visitCreated(CreatedResponse resp) throws IOException {
         httpResp.setStatus(HttpServletResponse.SC_CREATED);
         httpResp.setHeader("Location", resp.uri().toString());
+        httpResp.setContentLength(0);
         resp.extraHeaders().forEach(httpResp::setHeader);
     }
 
@@ -46,6 +47,7 @@ public abstract class AbstractResponseWriterVisitor
     public void visitLocation(LocationResponse resp) throws IOException {
         httpResp.setStatus(resp.statusCode());
         httpResp.setHeader("Location", resp.target().toString());
+        httpResp.setContentLength(0);
         resp.extraHeaders().forEach(httpResp::setHeader);
     }
 

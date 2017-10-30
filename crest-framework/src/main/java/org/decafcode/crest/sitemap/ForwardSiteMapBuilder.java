@@ -205,10 +205,8 @@ final class ForwardSiteMapBuilder {
             Method builderMethod) {
         Class<?> builderClass = builderMethod.getReturnType();
 
-        ImmutableMap.Builder<String, BuilderMethodWrapper> pathMethods
-                = ImmutableMap.builder();
-        ImmutableMap.Builder<String, BuilderMethodWrapper> queryMethods
-                = ImmutableMap.builder();
+        Map<String, BuilderMethodWrapper> pathMethods = new HashMap<>();
+        Map<String, BuilderMethodWrapper> queryMethods = new HashMap<>();
 
         for (Method method : builderClass.getMethods()) {
             PathParam pathP = method.getAnnotation(PathParam.class);
@@ -253,8 +251,8 @@ final class ForwardSiteMapBuilder {
         }
 
         return new BuilderPathInstantiator(
-                pathMethods.build(),
-                queryMethods.build(),
+                ImmutableMap.copyOf(pathMethods),
+                ImmutableMap.copyOf(queryMethods),
                 builderMethod,
                 buildMethod);
     }

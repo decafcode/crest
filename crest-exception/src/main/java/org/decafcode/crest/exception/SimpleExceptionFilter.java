@@ -37,13 +37,11 @@ public class SimpleExceptionFilter implements Filter {
                     kvp.getKey(),
                     kvp.getValue()));
             resp.setStatus(e.statusCode());
-            resp.setContentType("text/plain;charset=utf-8");
             emit(resp, e.getMessage());
         } catch (Throwable t) {
             ctx.log("Uncaught exception", t);
 
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.setContentType("text/plain;charset=utf-8");
             emit(resp, "Internal Server Error");
         }
     }

@@ -26,6 +26,8 @@ final class ForwardSiteMapBuilder {
             = new HashSet<>();
 
     ForwardSiteMapBuilder() {
+        readers.put(Boolean.class, Boolean::parseBoolean);
+        readers.put(Boolean.TYPE, Boolean::parseBoolean);
         readers.put(Instant.class, Instant::parse);
         readers.put(Integer.class, Integer::parseInt);
         readers.put(Integer.TYPE, Integer::parseInt);

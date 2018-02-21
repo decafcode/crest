@@ -6,12 +6,12 @@
 
   <groupId>org.decafcode.crest</groupId>
   <artifactId>crest-exception</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
 
   <parent>
     <groupId>org.decafcode.crest</groupId>
     <artifactId>crest</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
   </parent>
 
   <packaging>jar</packaging>
